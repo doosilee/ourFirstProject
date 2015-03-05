@@ -12,8 +12,8 @@ void main()
 	do{
 		system("cls");
 		printf("수행 할 항목의 번호를 입력하세요.\n");
-		printf("1. 출석 관리 프로그램\n");
-		printf("2. 학생 정보관리 프로그램\n");
+		printf("1. 학생 정보관리 프로그램\n");
+		printf("2. 출석 관리 프로그램\n");
 		printf("3. 종료합니다.\n");
 		scanf("%d", &n);
 
@@ -85,7 +85,7 @@ void userInterface2()
 	while(fscanf(inFile, "%s %d %f %s", st[i].name, &(st[i].id), &(st[i].score), st[i].image_url) != EOF) i++;
 
 	fclose(inFile);
-	/*switch(n)
+	switch(n)
 	{
 	case 1:
 		system("cls");
@@ -101,7 +101,7 @@ void userInterface2()
 		break;
 	default:
 		return;
-	}*/
+	}
 
 	printf("%20s %16s %16s\n", "학생이름", "학번", "점수");
 	for(j=0;j<i;j++)
@@ -249,7 +249,7 @@ int change_student()
 
 	printf("%20s %16s %16s\n", "학생이름", "학번", "점수");
 	i=0;
-	while(fscanf(inFile, "%s %s %d %f", st[i].image_url, st[i].name, &(st[i].id), &(st[i].score)) != EOF)
+	while(fscanf(inFile, "%s %d %f %s", st[i].name, &(st[i].id), &(st[i].score), st[i].image_url) != EOF)
 	{
 		printf("%20s %16d %16f\n", st[i].name, st[i].id, st[i].score);
 		i++;
@@ -268,8 +268,10 @@ int change_student()
 		{
 			printf("변경할 학생의 정보를 학생이름, 학번, 점수 순으로 입력하세요.\n");
 			scanf("%s %d %f", st[j].name, &st[j].id, &st[j].score);
-		}
-		fprintf(outFile,"%s %d %f", st[j].name, st[j].id, st[j].score);	
+			fprintf(outFile,"%s %d %f ", st[j].name, st[j].id, st[j].score);
+			printf("변경할 이미지를 저장합니다. 카메라를 보며 잠시만 기다려주세요.\n");
+			fprintf(outFile, "%s\n", save_student_image(st[i]));
+		}	
 	}
 	fclose(outFile);
 
@@ -400,7 +402,7 @@ String save_student_image(STUDENT student)
 }
 
 //sorting--------------------------------------------------------------------------------------
-int score(void *a, void *b)
+int score(const void *a, const void *b)
 {
 	STUDENT *temp1, *temp2;
 	temp1 = (STUDENT *) a;
@@ -408,7 +410,7 @@ int score(void *a, void *b)
 	return temp1->score - temp2->score;
 }
 
-int name(void *a, void *b)
+int name(const void *a, const void *b)
 {
 	STUDENT *temp1, *temp2;
 	temp1 = (STUDENT *) a;
@@ -416,7 +418,7 @@ int name(void *a, void *b)
 	return strcmp(temp1->name, temp2->name);
 }
 
-int id(void *a, void *b)
+int id(const void *a, const void *b)
 {
 	STUDENT *temp1, *temp2;
 	temp1 = (STUDENT *) a;
