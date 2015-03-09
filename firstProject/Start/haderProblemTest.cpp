@@ -259,19 +259,49 @@ int change_student()
 
 	printf("변경하고 싶은 학생의 학번을 입력하세요.\n");
 	scanf("%d", &input_id);
-	
+	/*
+	char strPath[] = {"C:/Users/성실/Documents/Visual Studio 2010/Projects/opencv/얼굴인식출석체크/사진/20133277"};
+	int nResult = remove(strPath);
+
+	if(nResult == 0)
+	{
+	printf("파일 삭제 성공");
+	}
+	else if(nResult == -1)
+	{
+	perror("파일 삭제 실패");
+	}
+	return 0; */
 	outFile = fopen("student.db", "w");
 	j=0;
 	for(j=0; j< i; ++j)
 	{
 		if(input_id==st[j].id)
 		{
-			printf("변경할 학생의 정보를 학생이름, 학번, 점수 순으로 입력하세요.\n");
-			scanf("%s %d %f", st[j].name, &st[j].id, &st[j].score);
-			fprintf(outFile,"%s %d %f ", st[j].name, st[j].id, st[j].score);
-			printf("변경할 이미지를 저장합니다. 카메라를 보며 잠시만 기다려주세요.\n");
-			fprintf(outFile, "%s\n", save_student_image(st[i]));
-		}	
+			printf("학생 이름,학번, 점수를 변경하려면 1번, 학생 사진을 변경하려면 2번을 눌러주세요");
+			scanf("%d",&n);
+
+			if(n==1)
+			{
+				printf("변경할 학생의 정보를 학생이름, 학번, 점수 순으로 입력하세요.\n");
+				scanf("%s %d %f", st[j].name, &st[j].id, &st[j].score);
+				fprintf(outFile,"%s %d %f ", st[j].name, st[j].id, st[j].score);
+			}
+			else if(n==2)
+			{
+				printf("변경할 이미지를 저장합니다. 카메라를 보며 잠시만 기다려주세요.\n");
+				fprintf(outFile, "%s\n", save_student_image(st[j]));
+			}
+			/*int nResult = remove(st[j].image_url);
+			if(nResult == 0)
+			{
+			printf("파일 삭제 성공");
+			}
+			else if(nResult == -1)
+			{
+			perror("파일 삭제 실패");
+			}*/
+		}
 	}
 	fclose(outFile);
 
@@ -290,9 +320,7 @@ int change_student()
 }
 
 //출석체크프로그램-----------------------------------------------------------------------------------------------------------
-void attendanceBook()
-{
-}
+void attendanceBook(){}
 
 
 //facedetect--------------------------------------------------------------------------------------------------
@@ -386,9 +414,9 @@ String save_student_image(STUDENT student)
 				fn = format("%d", student.id);
 				imwrite(image_url + fn + ".png", copy);
 				putText(frame,"image is saved.", Point(20, 460), 0.6f, 1., Scalar(0, 255, 0));
-				
+
 				isChanged = true;
-				}
+			}
 		}			
 
 		imshow("얼굴 검출", frame);
