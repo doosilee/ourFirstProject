@@ -132,7 +132,7 @@ int pluse_student()
 
 	printf("%20s %16s %16s\n", "학생이름", "학번", "점수");
 	i=0;
-	while(fscanf(inFile, "%s %d %f %s", st[i].name, &(st[i].id), &(st[i].score), st[i].image_url) != EOF)
+	while(fscanf(inFile, "%s %d %f %s\n", st[i].name, &(st[i].id), &(st[i].score), st[i].image_url) != EOF)
 	{
 		printf("%20s %16d %16f\n", st[i].name, st[i].id, st[i].score);
 		i++;
@@ -357,10 +357,10 @@ String save_student_image(STUDENT student)
 	string msg,fn;
 
 	btn0 = Rect(Point(10, 10), Size(200, 40));
-	btn1 = Rect(Point(10, 50), Size(200, 40));
+	//btn1 = Rect(Point(10, 50), Size(200, 40));
 
 	//---------------------------------
-	//검출기 읽기
+	///검출기 읽기
 	CascadeClassifier faceCascade, eyeCascade;
 	load_classifier(faceCascade, faceCascadeFilename);
 	load_classifier(eyeCascade, eyeCascadeFilename);
@@ -381,13 +381,13 @@ String save_student_image(STUDENT student)
 		//버튼 만들기
 		Mat tmp = frame(btn0);
 		tmp += (isSaved)? Scalar(50, 50, 50):Scalar(0, 0, 0);
-		tmp = frame(btn1);
-		tmp += (isChanged)? Scalar(50, 50, 50):Scalar(0, 0, 0);
+		///tmp = frame(btn1);
+		///tmp += (isChanged)? Scalar(50, 50, 50):Scalar(0, 0, 0);
 
 		putText (frame, "save face", btn0.tl() + Point(5, 26), 0.6f, 1., Scalar(0, 255, 0));
 		rectangle(frame, btn0, Scalar(100, 100, 100));
-		putText (frame, "change face", btn1.tl() + Point(5, 26), 0.6f, 1., Scalar(0, 255, 0));
-		rectangle(frame, btn1, Scalar(Scalar(100, 100, 100)));
+		///putText (frame, "change face", btn1.tl() + Point(5, 26), 0.6f, 1., Scalar(0, 255, 0));
+		///rectangle(frame, btn1, Scalar(Scalar(100, 100, 100)));
 
 		//-----------------------------
 		//change 버튼 토글
